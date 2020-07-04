@@ -38,7 +38,7 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+**/node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -82,7 +82,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+**/dist
 
 # Gatsby files
 .cache/
@@ -107,6 +107,7 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+**/.vscode
 
 # yarn v2
 .yarn/cache
@@ -193,12 +194,12 @@ web_modules/
 .parcel-cache
 
 # Next.js build output
-.next
-out
+**/.next
+**/out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+**/dist
 
 # Gatsby files
 .cache/
@@ -230,3 +231,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+client/.vscode/settings.json
+
+target
+
+
+# next.js
+**/.next
+.env*.local
+**/out
+**/dist
