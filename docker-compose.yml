@@ -1,0 +1,39 @@
+version: '3.4'
+services:
+  client:
+    build: .
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - RUN_MODE=api
+      - NODE_ENV=development
+    depends_on:
+      - api
+    command: npm run start
+
+  api:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/db
+      - NODE_ENV=development
+      - PORT=3000
+    command: npm run start
+    volumes:
+      - .:/app/
+      - /app/node_modules
+
+  postgres:
+    image: postgres:12.3
+    ports:
+      - '${DB_PORT}:5432'
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    volumes:
+      - ./persist/db/git:/var/lib/postgresql/data

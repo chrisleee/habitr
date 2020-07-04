@@ -1,0 +1,28 @@
+{
+  "name": "food_with_friends",
+  "version": "0.0.1",
+  "description": "Food with Friends is an application you to split your food or grocery delivery orders with ease!",
+  "main": "index.js",
+  "scripts": {
+    "install:both": "concurrently \"npm run install:client\" \"npm run install:api\"",
+    "install:client": "cd client && npm install",
+    "install:api": "cd api && npm install",
+    "ci:both": "concurrently \"npm run ci:client\" \"npm run ci:api\"",
+    "ci:client": "cd client && npm ci",
+    "ci:api": "cd api && npm ci",
+    "start": "concurrently \"npm run start:client\" \"npm run start:api\"",
+    "start:client": "cd client && npm run start",
+    "start:api": "cd api && npm run start:dev",
+    "build": "concurrently \"npm run build:client\" \"npm run build:api\"",
+    "build:client": "cd client && npm run build",
+    "build:api": "cd api && npm run build",
+    "test": "concurrently \"npm run test:client\" \"npm run test:api\"",
+    "test:client": "cd client && npm test",
+    "test:api": "cd api && npm test"
+  },
+  "author": "Christopher Lee and Garrett Holly",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
