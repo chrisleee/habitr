@@ -12,6 +12,6 @@ export class Spree extends BaseEntity {
   @Column()
   end: Date;
 
-  @ManyToOne((type) => Habit, (habit) => habit.sprees, { cascade: true })
+  @ManyToOne((type) => Habit, (habit) => habit.sprees)
   habit: Habit;
 }

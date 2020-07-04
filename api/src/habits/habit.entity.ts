@@ -1,11 +1,12 @@
+import { classToPlain, Exclude } from 'class-transformer';
 import {
-  Entity,
   BaseEntity,
   Column,
-  OneToMany,
-  PrimaryColumn,
+  Entity,
   ManyToOne,
+  OneToMany,
   OneToOne,
+  PrimaryColumn,
 } from 'typeorm';
 import { User } from '../auth/user.entity';
 import { Spree } from '../sprees/spree.entity';
@@ -31,7 +32,11 @@ export class Habit extends BaseEntity {
   isActive: boolean;
 
   @ManyToOne((type) => User, (user) => user.habits, { cascade: true })
+  @Exclude({ toPlainOnly: true })
   user: User;
+
+  @Column()
+  userId: number;
 
   @OneToMany((type) => Spree, (spree) => spree.habit, {
     eager: true,
@@ -43,5 +48,9 @@ export class Habit extends BaseEntity {
     eager: true,
     cascade: true,
   })
-  longestSpree: Spree[];
+  longestSpree: Spree;
+
+  toJSON(): any {
+    return classToPlain(this);
+  }
 }
