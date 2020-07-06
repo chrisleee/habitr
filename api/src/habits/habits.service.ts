@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as dayjs from 'dayjs';
 import { User } from '../auth/user.entity';
@@ -8,6 +8,7 @@ import { CreateHabitDto } from './dto/create-habit-dto';
 import { DeleteLinkDto } from './dto/delete-link-dto';
 import { Habit } from './habit.entity';
 import { HabitRepository } from './habit.repository';
+import { UpdateHabitDto } from './dto/update-habit-dto';
 
 @Injectable()
 export class HabitsService {
@@ -23,6 +24,19 @@ export class HabitsService {
     return this.habitRepository.getHabits(user);
   }
 
+  async getHabitById(id: string, user: User): Promise<Habit> {
+    const habit = await this.habitRepository.findOne({
+      relations: ['user'],
+      where: { id, user: { id: user.id } },
+    });
+
+    if (!habit) {
+      throw new NotFoundException(`Habit with id "${id}" not found!`);
+    }
+
+    return habit;
+  }
+
   async createHabit(
     createHabitDto: CreateHabitDto,
     user: User,
@@ -30,14 +44,32 @@ export class HabitsService {
     return this.habitRepository.createHabit(createHabitDto, user);
   }
 
-  // TODO: Add try/catch
+  async updateHabit(
+    id: string,
+    updateHabitDto: UpdateHabitDto,
+    user: User,
+  ): Promise<Habit> {
+    const habit = await this.getHabitById(id, user);
+    return this.habitRepository.updateHabit(habit, updateHabitDto, user);
+  }
+
+  async deleteHabit(id: string, user: User): Promise<void> {
+    const result = await this.habitRepository.delete({
+      id,
+      user: { id: user.id },
+    });
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Habit "${id}" not found`);
+    }
+  }
+
   async addLink(id: string, addLinkDto: AddLinkDto): Promise<Habit> {
     const habit = await this.habitRepository.findOne(id);
     await this.spreesService.addLink(habit, dayjs(addLinkDto.date));
     return habit;
   }
 
-  // TODO: Add try/catch
   async deleteLink(id: string, deleteLinkDto: DeleteLinkDto): Promise<Habit> {
     const habit = await this.habitRepository.findOne(id);
     await this.spreesService.deleteLink(habit, dayjs(deleteLinkDto.date));

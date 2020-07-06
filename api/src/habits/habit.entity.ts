@@ -30,7 +30,9 @@ export class Habit extends BaseEntity {
   @Column()
   isActive: boolean;
 
-  @ManyToOne((type) => User, (user) => user.habits, { cascade: true })
+  @ManyToOne((type) => User, (user) => user.habits, {
+    cascade: true,
+  })
   @Exclude({ toPlainOnly: true })
   user: User;
 

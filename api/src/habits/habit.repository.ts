@@ -3,6 +3,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/user.entity';
 import { CreateHabitDto } from './dto/create-habit-dto';
 import { Habit } from './habit.entity';
+import { UpdateHabitDto } from './dto/update-habit-dto';
 
 @EntityRepository(Habit)
 export class HabitRepository extends Repository<Habit> {
@@ -46,12 +47,30 @@ export class HabitRepository extends Repository<Habit> {
       await habit.save();
     } catch (error) {
       this.logger.error(
-        `Failed to create order for user "${user.id}, order "${habit.title}"`,
+        `Failed to create habit for user "${user.id}, habit "${habit.id}"`,
         error.stack,
       );
       throw new InternalServerErrorException();
     }
 
     return habit;
+  }
+
+  async updateHabit(
+    habit: Habit,
+    updateHabitDto: UpdateHabitDto,
+    user: User,
+  ): Promise<Habit> {
+    try {
+      const newHabit = this.merge(habit, updateHabitDto);
+      newHabit.save();
+      return newHabit;
+    } catch (error) {
+      this.logger.error(
+        `Failed to update habit for user "${user.id}, order "${habit.id}"`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
   }
 }

@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as dayjs from 'dayjs';
@@ -104,8 +105,9 @@ export class SpreesService {
           end: MoreThanOrEqual(date.toDate()),
         },
       });
+
       if (!spree) {
-        throw new InternalServerErrorException('Spree not found');
+        throw new NotFoundException('Spree not found');
       }
       const startDate = dayjs(spree.start);
       const endDate = dayjs(spree.end);
