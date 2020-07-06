@@ -5,15 +5,14 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  OneToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../auth/user.entity';
 import { Spree } from '../sprees/spree.entity';
 
 @Entity()
 export class Habit extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -43,12 +42,6 @@ export class Habit extends BaseEntity {
     cascade: true,
   })
   sprees: Spree[];
-
-  @OneToOne((type) => Spree, (spree) => spree.habit, {
-    eager: true,
-    cascade: true,
-  })
-  longestSpree: Spree;
 
   toJSON(): any {
     return classToPlain(this);

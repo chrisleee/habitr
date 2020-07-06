@@ -3,7 +3,6 @@ import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../auth/user.entity';
 import { CreateHabitDto } from './dto/create-habit-dto';
 import { Habit } from './habit.entity';
-import { v4 as uuidv4 } from 'uuid';
 
 @EntityRepository(Habit)
 export class HabitRepository extends Repository<Habit> {
@@ -34,7 +33,6 @@ export class HabitRepository extends Repository<Habit> {
     const { title, description, periodType, periodFreq } = createHabitDto;
 
     const habit = new Habit();
-    habit.id = uuidv4();
     habit.title = title;
     habit.description = description;
     habit.periodType = periodType;

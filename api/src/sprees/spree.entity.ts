@@ -1,9 +1,16 @@
-import { Entity, BaseEntity, PrimaryColumn, ManyToOne, Column } from 'typeorm';
+import { classToPlain, Exclude } from 'class-transformer';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Habit } from '../habits/habit.entity';
 
 @Entity()
 export class Spree extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -13,5 +20,10 @@ export class Spree extends BaseEntity {
   end: Date;
 
   @ManyToOne((type) => Habit, (habit) => habit.sprees)
+  @Exclude()
   habit: Habit;
+
+  toJSON(): any {
+    return classToPlain(this);
+  }
 }
