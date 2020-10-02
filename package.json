@@ -1,7 +1,7 @@
 {
-  "name": "food_with_friends",
+  "name": "habitr",
   "version": "0.0.1",
-  "description": "Food with Friends is an application you to split your food or grocery delivery orders with ease!",
+  "description": "Habitr is an application that lets you track habits!",
   "main": "index.js",
   "scripts": {
     "install:both": "concurrently \"npm run install:client\" \"npm run install:api\"",
@@ -20,7 +20,7 @@
     "test:client": "cd client && npm test",
     "test:api": "cd api && npm test"
   },
-  "author": "Christopher Lee and Garrett Holly",
+  "author": "Christopher Lee",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^5.3.0"
