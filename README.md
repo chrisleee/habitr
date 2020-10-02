@@ -49,4 +49,4 @@ $ npm run test:cov
 
 ## License
 
-Food with Friends is [MIT licensed](LICENSE).
+Habitr is [MIT licensed](LICENSE).
