@@ -5,8 +5,7 @@
 
   let habits: HabitData[];
 
-  const AUTH_TOKEN =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIyIiwiaWF0IjoxNTk1NDU3NDI1LCJleHAiOjE1OTU0NjEwMjV9.8OBUhPzpILQYaoHfISW0xnLRGqPbMwTMAiSh7rwYMco';
+  const AUTH_TOKEN = '';
 
   const url = 'http://localhost:8010/habits';
 
